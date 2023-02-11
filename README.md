@@ -1,4 +1,4 @@
-# redshed
+# Red Shed
 Red Team tools written in C#. I'm developing these tools for fun and to learn more about Red Teaming, C#, and the .NET Framework.
 
 ## Tools
@@ -27,7 +27,7 @@ using System;
 
 namespace HelloWorld {
   class Program {
-    static void Main(string[] args) {
+    static void Main() {
       Console.WriteLine("Hello world!");
     }
   }

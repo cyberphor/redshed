@@ -1,28 +1,31 @@
 
-using System;
 using System.Net; // provides IPAddress, IPEndPoint
 using System.Net.Sockets; // provides Socket, SocketType
 using System.Text; // provides Encoding
 
-namespace C2 {
+namespace RedShed {
   class Server {
-    IPAddress ip;
-    IPEndPoint address;
-    Socket server;
-    Socket client;
-    string message;
+    public IPAddress address;
+    public int port;
+    public IPEndPoint endpoint;
+    public Socket listener;
 
-    static void Main(string[] args) {
-      ip = IPAddress.Parse("0.0.0.");
-      address = new IPEndPoint(ip, 4444);
-      server = new Socket(IPAddress.Any.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-      server.Bind(address);
-      server.Listen(5);
-      message = "OK";
-      client = server.Accept();
+    public Server() {
+      address = IPAddress.Parse("0.0.0.0");
+      port = 4444;
+      endpoint = new IPEndPoint(address, port);
+      listener = new Socket(address.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+    }
+
+    static void Main() {
+      Server server = new Server();
+      server.listener.Bind(server.endpoint);
+      server.listener.Listen(5);
+      Socket client = server.listener.Accept();
+      string message = "OK";
       client.Send(Encoding.ASCII.GetBytes(message));
       client.Close();
-      server.Close();
+      server.listener.Close();
     }
   }
 }
