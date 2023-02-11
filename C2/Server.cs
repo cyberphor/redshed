@@ -1,23 +1,28 @@
 
 using System;
-using System.Net;
-using System.Net.Sockets;
+using System.Net; // provides IPAddress, IPEndPoint
+using System.Net.Sockets; // provides Socket, SocketType
+using System.Text; // provides Encoding
 
-namespace Server {
-  class Program {
-    Socket server = new Socket(IPAddress.Any.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-    IPEndPoint address = new IPEndPoint(IPAddress.Any, 4444);
-    string message = "OK";
-    
+namespace C2 {
+  class Server {
+    IPAddress ip;
+    IPEndPoint address;
+    Socket server;
+    Socket client;
+    string message;
+
     static void Main(string[] args) {
+      ip = IPAddress.Parse("0.0.0.");
+      address = new IPEndPoint(ip, 4444);
+      server = new Socket(IPAddress.Any.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
       server.Bind(address);
       server.Listen(5);
-
-      Socket client = server.Accept();
-      client.send(Encoding.ASCII.GetBytes(message));
-      
-      client.close();
-      server.close();
+      message = "OK";
+      client = server.Accept();
+      client.Send(Encoding.ASCII.GetBytes(message));
+      client.Close();
+      server.Close();
     }
   }
 }
