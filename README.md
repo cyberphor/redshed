@@ -15,12 +15,7 @@ Red Team tools written in C#. I'm developing these tools for fun and to learn mo
 - [ ] Lock the screen
 
 ## How to Compile a C# Source File into an Executable Program
-**Step 1.** Using PowerShell, create an alias for the C# compiler (`csc.exe`). 
-```pwsh
-Set-Alias -Name "SendTo-CSharpCompiler" -Value "C:\windows\Microsoft.NET\Framework\v4.0.30319\csc.exe"
-```
-
-**Step 2.** Write your source code. 
+**Step 1.** Write your source code. 
 ```cs
 // HelloWorld.cs
 using System;
@@ -36,7 +31,9 @@ namespace HelloWorld {
 
 **Step 3.** Compile, execute, and profit! 
 ```pwsh
-SendTo-CSharpCompiler HelloWorld.cs
+C:\windows\Microsoft.NET\Framework\v4.0.30319\csc.exe `
+/reference:'C:\Windows\assembly\GAC_MSIL\System.Management.Automation\1.0.0.0__31bf3856ad364e35\System.Management.Automation.dll' `
+HelloWorld.cs
 ```
 ```pwsh
 .\HelloWorld.exe

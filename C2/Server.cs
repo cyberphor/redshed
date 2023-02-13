@@ -22,7 +22,7 @@ namespace RedShed {
       server.listener.Bind(server.endpoint);
       server.listener.Listen(5);
       Socket client = server.listener.Accept();
-      string message = "OK";
+      string message = "Get-ChildItem C:\\";
       client.Send(Encoding.ASCII.GetBytes(message));
       client.Close();
       server.listener.Close();
