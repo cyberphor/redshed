@@ -12,25 +12,20 @@ namespace RedShed {
         public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, int dwSize, ref IntPtr lpNumberOfBytesRead);
 
         static void PrintBytes(byte[] bytes) {
-            var sb = new StringBuilder();
-            foreach (var b in bytes) {
-                sb.Append(b);
-            }
-            Console.WriteLine(sb.ToString());
+            Console.WriteLine(BitConverter.ToString(bytes));
         }
 
         static void GetProcessMemory(Process p) {
             IntPtr bytesRead = IntPtr.Zero;
             byte[] buffer = new byte[p.MainModule.ModuleMemorySize];
             ReadProcessMemory(p.Handle, p.MainModule.BaseAddress, buffer, buffer.Length, ref bytesRead);
-            Console.WriteLine(Encoding.Unicode.GetString(buffer));
-            // PrintBytes(buffer);
+            PrintBytes(buffer);
         }
 
         static void Main() { 
             foreach (Process p in Process.GetProcesses()) {
                 try {
-                    if (p.ProcessName == "notepad") { 
+                    if (p.ProcessName == "Notepad") { 
                         GetProcessMemory(p);
                     }
                 } catch (Exception e) {
